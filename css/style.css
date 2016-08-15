@@ -1,0 +1,667 @@
+html, body {
+    height: 100%;
+}
+
+/*Index file divs' classes*/
+#mapid{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+.logo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0.3125vw;
+    border-top: solid 1px lightgray;
+    border-left: solid 1px lightgray;
+    border-right: solid 1px lightgray;
+    width: 23.75vw;
+    background-color: #8ae600;
+    text-align: center;
+    overflow: hidden;
+}
+
+#logoTitle {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1875vw;
+    font-family: sans-serif,Verdana ;
+    color:#395817;
+    padding-top: 0.7vh;
+    padding-bottom: 0.7vh;
+    font-weight: lighter;
+}
+
+#logoTitle:hover {
+    text-decoration: none;
+    color: #395817;
+}
+
+#myNavbar ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+#myNavbar ul li {
+    background-color:#8ae600;
+    top: 0.3125vw;
+    right: 0.3125vw;
+    border-radius: 0.3125vw;
+    margin: 0.3125vw;
+}
+
+
+#modeListBoxSelect {
+    display: inline-block;
+    border-top: 1px solid cornsilk;
+    border-bottom: 1px solid cornsilk;
+}
+
+#modeListBoxSelect > div {
+    /*float: left;*/
+    display: inline-block;
+    margin: 0.5vw 0.5vw 0.4vw 0.5vw;
+
+}
+
+#modeListBoxSelect div:hover {
+    cursor: pointer;
+}
+
+.walkIcon {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Walk.png') no-repeat;
+    background-size: 100%;
+}
+
+.walkIconClicked{
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Walk-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.walkIcon:hover {
+    background: url('images/Walk-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.bikeIcon {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Biking.png') no-repeat;
+    background-size: 100%
+}
+
+.bikeIconClicked {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Biking-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.bikeIcon:hover {
+    background: url('images/Biking-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.busIcon {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Bus.png') no-repeat;
+    background-size: 100%
+}
+
+.busIconClicked {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Bus-gray.png') no-repeat;
+    background-size: 100%
+}
+
+.busIcon:hover {
+    background: url('images/Bus-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.carIcon {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Car.png') no-repeat;
+    background-size: 100%
+}
+
+.carIcon:hover {
+    background: url('images/Car-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.carIconClicked {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/Car-gray.png') no-repeat;
+    background-size: 100%
+}
+
+.parkRideIcon {
+    height: 2vw;
+    width: 4vw;
+    background: url('images/PPlusBus.png') no-repeat;
+    background-size: 100%
+}
+
+.parkRideIcon:hover {
+    background: url('images/PPlusBus-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.parkRideIconClicked {
+    height: 2vw;
+    width: 4vw;
+    background: url('images/PPlusBus-gray.png') no-repeat;
+    background-size: 100%
+}
+
+.settingsIcon {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/setting-white.png') no-repeat;
+    background-size: 100%;
+}
+
+.settingsIcon:hover {
+    background: url('images/setting-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.settingsIconClicked {
+    height: 2vw;
+    width: 2vw;
+    background: url('images/setting-gray.png') no-repeat;
+    background-size: 100%;
+}
+
+.toolTip {
+    background: rgba(0,0,0,.9);
+    width: auto;
+    height: auto;
+    display: none;
+    position: absolute;
+    border-radius: 0.625vw;
+}
+
+.toolTip p {
+    text-align: center;
+    color: #ffffff;
+    font-size: 0.9375vw;
+    margin: auto;
+    padding: 0.3125vw;
+}
+
+.now-later {
+    display: none;
+    background-color: #8ae600;
+    border: solid 1px lightgray;
+    border-radius: 0.3125vw;
+}
+
+.time-options {
+    position: relative;
+    text-align: center;
+}
+
+.time-options label {
+    margin-top: 0.1875vw;
+    width: 27%;
+}
+
+.ui-button-text-only .ui-button-text {
+    font-size: 0.9375vw;
+    text-align: center;
+}
+
+.DateTimeInput {
+    text-align: center;
+}
+
+.DateTimeInput input {
+    text-align: center;
+    height: 1.75vw;
+    width: 9.375vw;
+    border-radius: 0.625vw;
+    margin: 0.625vw;
+    line-height: 1.67;
+    border: 1px solid #ccc;
+    font-size: 0.9375vw;
+}
+
+.walkSpeed, .bikeSpeed, .walkDistance, .carbonDioxide {
+    border: solid 1px lightgray;
+    background: #8ae600;
+    border-radius: 0.3125vw;
+    display: none;
+    font-family: Georgia, serif;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    width: 100%;
+    text-align: center;
+    padding: 0.3125vw 0 0.3125vw 0;
+}
+
+.text-field{
+    height: 1.875vw;
+    width: 9.375vw;
+    padding: 0.125vw;
+}
+/****************************************************************/
+
+/*Initial leaflet-routing-machine classes*/
+.leaflet-routing-container {
+    position: fixed;
+    width: 23.75vw;
+    height: 100%;
+    top: 3.8vw;
+    /*bottom: 20px;*/
+    left: 0;
+}
+
+.leaflet-routing-geocoders div {
+    padding: 0.25vw 0 0.25vw 0;
+}
+
+.leaflet-routing-geocoders{
+    border: solid 1px lightgray;
+    background: #8ae600;
+    border-radius: 0.3125vw;
+    margin-top: 1vw;
+    padding-bottom: 0.25vw;
+    padding-top: 0.5vw;
+}
+
+.leaflet-routing-geocoders span{
+    font-size: 1.5625vw;
+}
+
+.leaflet-routing-geocoder {
+    height: 2.1875vw;
+    margin: 0 0.625vw 0.625vw 0.625vw;
+    padding-left: 0.75vw;
+    padding-top: 0;
+}
+
+.leaflet-routing-geocoders input {
+    width: calc(100% - 0.25vw);
+    height: 2.375vw;
+    line-height: 1.67;
+    border: 1px solid #ccc;
+    border-radius: 0.625vw;
+    padding-left: 0.625vw;
+    font-size: 1.25vw;
+}
+
+.alternative-container {
+    height: 75vh;
+    border: 0;
+    margin: 0 0 0 0;
+}
+/****************************************************************/
+
+/* Classes made during building the route */
+.single-alternative {
+    display: flex;
+    background-color: #E6EFFE;
+    border-radius: 0.3125vw;
+    flex-direction: column;
+    padding: 0;
+    margin-top: 0;
+    border-bottom: 1px solid #ccc;
+    max-height: 100%;
+    transition: all 0.2s ease;
+}
+
+.panel-group {
+    /*max-height: calc(100% - 270px);*/
+    overflow-y: auto;
+    /*margin-bottom: 5px;*/
+    display: none;
+}
+
+.panel-group::-webkit-scrollbar {
+    width: 0.5vw;
+}
+
+.panel-group::-webkit-scrollbar-track {
+    border-radius: 0.125vw;
+    background-color: #eee;
+}
+
+.panel-group::-webkit-scrollbar-thumb {
+    border-radius: 0.125vw;
+    background-color: #888;
+}
+
+.leaflet-routing-alt-minimized {
+    background-color: #F4F4F4;
+    max-height: 5.625vw;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.leaflet-routing-alt-minimized:hover {
+    background-color: #EBF0F8;
+}
+
+.alternative-header {
+    min-height: 5.625vw;
+}
+
+.header-mode-img {
+    float: left;
+    margin-top: 4%;
+    margin-left: 5%;
+    width: 30%;
+}
+
+.header-mode-img img {
+    width: 4.0625vw;
+    height: 3.125vw;
+}
+
+.header-text {
+      float: left;
+      margin: auto;
+      text-align: center;
+}
+
+.header-text h4 {
+    font-size: 1.25vw;
+}
+
+.header-text h5 {
+    font-size: 0.9375vw;
+}
+
+.header-tree-img {
+    float: right;
+    width: 30%;
+    margin: auto;
+}
+
+.header-tree-img img {
+    width: 5.625vw;
+    height: 5vw;
+}
+
+.panel-title {
+    color: #333333;
+    font-family: 'Bitter', serif;
+    font-size: 1.25vw;
+    font-weight: normal;
+    line-height: 0.8125vw;
+    text-align: center;
+}
+
+.panel-heading:hover {
+     background-color: #C2F5F9;
+}
+
+.panel-title a {
+    text-decoration: none;
+}
+
+.panel-body {
+    color: #333333;
+    font-family: Georgia, serif;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.single-alternative ul:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.stepInline {
+    display: inline;
+}
+
+/*.iconList {*/
+/*}*/
+
+.stepList {
+    display: inline-block;
+    width: 70%;
+    margin-left: 4%;
+    margin-right: 2%;
+}
+
+.busStopList {
+    display: inline-block;
+    margin-left: 15%;
+    width: 55%;
+}
+
+.busEnter {
+    width: 3.125vw;
+    height: 3.125vw;
+}
+
+.fa-lg {
+    display: inline-block;
+    float: right;
+    font-size: 1.25vw;
+    margin: 0.625vw 0.625vw 0.3125vw 0;
+    cursor: pointer;
+}
+
+.fa-lg:hover {
+    color: #dad55e;
+}
+
+#error {
+    border: solid 1px lightgray;
+    background: #8ae600;
+    border-radius: 0.3125vw;
+    display: none;
+    font-family: Georgia, serif;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    width: 100%;
+    text-align: center;
+}
+
+.leaflet-routing-icon {
+    background-image: url('images/leaflet.routing.icons.png');
+    -webkit-background-size: 15vw 1.25vw;
+    background-size: 15vw 1.25vw;
+    background-repeat: no-repeat;
+    margin: 0;
+    content: '';
+    display: inline-block;
+    vertical-align: top;
+    width: 1.25vw;
+    height: 1.25vw;
+}
+
+.leaflet-routing-icon-continue         { background-position: 0 0; }
+.leaflet-routing-icon-sharp-right      { background-position: -1.25vw 0; }
+.leaflet-routing-icon-turn-right       { background-position: -2.5vw 0; }
+.leaflet-routing-icon-bear-right       { background-position: -3.75vw 0; }
+.leaflet-routing-icon-u-turn           { background-position: -5vw 0; }
+.leaflet-routing-icon-sharp-left       { background-position: -6.25vw 0; }
+.leaflet-routing-icon-turn-left        { background-position: -7.5vw 0; }
+.leaflet-routing-icon-bear-left        { background-position: -8.75vw 0; }
+.leaflet-routing-icon-depart           { background-position: -10vw 0; }
+.leaflet-routing-icon-enter-roundabout { background-position: -11.25vw 0; }
+.leaflet-routing-icon-arrive           { background-position: -12.5vw 0; }
+.leaflet-routing-icon-via              { background-position: -13.75vw 0; }
+.leaflet-routing-icon-none             { display: none; }
+
+.leaflet-bar .single-alternative:last-child {
+    border-bottom: none;
+}
+/****************************************************************/
+
+/* Leaflet routing geocoder initial classes */
+.leaflet-routing-add-waypoint{
+    display: none;
+}
+
+.leaflet-routing-geocoders button {
+    font: bold 18px 'Lucida Console', Monaco, monospace;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    margin: 0;
+    margin-right: 3px;
+    float: right;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.leaflet-routing-add-waypoint:after {
+    content: '+';
+}
+
+.leaflet-routing-reverse-waypoints:after {
+    font-weight: normal;
+    content: '\21c5';
+}
+
+.leaflet-routing-geocoders button:hover {
+    background-color: #eee;
+}
+
+.leaflet-routing-geocoders input,.leaflet-routing-remove-waypoint,.leaflet-routing-geocoder {
+    position: relative;
+}
+
+.leaflet-routing-geocoder-result {
+    font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    position: absolute;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    z-index: 1000; /* Arbitrary, but try to be above "most" things. */
+}
+
+.leaflet-routing-geocoder-result table {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0 0 4px 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.leaflet-routing-geocoder-result-open {
+    max-height: 800px;
+}
+
+.leaflet-routing-geocoder-selected, .leaflet-routing-geocoder-result tr:hover {
+    background-color: #eee;
+}
+
+.leaflet-routing-geocoder-no-results {
+    font-style: italic;
+    color: #888;
+}
+
+.leaflet-routing-remove-waypoint {
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.leaflet-routing-remove-waypoint:after {
+    position: absolute;
+    display: block;
+    width: 0.9375vw;
+    height: 0.0625vw;
+    z-index: 1;
+    right: 0.0625vw;
+    top: 0.25vw;
+    bottom: 0;
+    margin: auto;
+    padding: 0.125vw;
+    font-size: 1.125vw;
+    font-weight: bold;
+    content: "\00d7";
+    text-align: center;
+    cursor: pointer;
+    color: #ccc;
+    background: white;
+    padding-bottom: 1vw;
+    margin-top: -1vw;
+    padding-right: 0.25vw;
+    line-height: 1;
+}
+
+.leaflet-routing-remove-waypoint:hover {
+    color: black;
+}
+/****************************************************************/
+
+/**Initial classes from LRM.css*/
+.leaflet-top .leaflet-routing-container.leaflet-routing-container-hide {
+    margin-top: 10px !important;
+}
+.leaflet-right .leaflet-routing-container.leaflet-routing-container-hide {
+    margin-right: 10px !important;
+}
+.leaflet-bottom .leaflet-routing-container.leaflet-routing-container-hide {
+    margin-bottom: 10px !important;
+}
+.leaflet-left .leaflet-routing-container.leaflet-routing-container-hide {
+    margin-left: 10px !important;
+}
+/****************************************************************/
+
+/*Media queries*/
+@media only screen and (max-width: 640px) {
+    .leaflet-routing-container {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        height: 100%;
+        top: 10.47vw;
+    }
+
+    .logo{
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 0.3125vw;
+        border-top: solid 1px lightgray;
+        border-left: solid 1px lightgray;
+        border-right: solid 1px lightgray;
+        width: 100vw;
+        background-color: #8ae600;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    #logoTitle {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        font-size: 2.97vw;
+        font-family: sans-serif,Verdana ;
+        color:#395817;
+        padding-top: 0.7vh;
+        padding-bottom: 0.7vh;
+        font-weight: lighter;
+    }
+}

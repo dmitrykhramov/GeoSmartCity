@@ -1,0 +1,41 @@
+/**
+ * Created by Dmitry Khramov on 13.08.2016.
+ */
+
+The project consists of 2 folders and index.php file.
+- css folder contains images used in project and style.css file with all css classes
+- javascript folder contains:
+    - map.js - the file where leaflet map is created, initial settings of the map and geocoder are set up;
+
+    - Control.Geocoder.js - consists of several geocoders which can be used in the project.
+
+    - additionalFunctions.js - file with supported js functions mainly used for UI interaction;
+also contains functions used in LRM for calculating CO2 and displaying icons (iconBySelectedMode(),
+CO2calculation(carDistance, busDistance), OffsetByTree(emission).
+
+    - lang.js - contains language objects with associative arrays(word translations) for UI, which inserted
+into html by jQuery selectors. And function setRoutingLanguage() used in LRM for setting language for
+for routing instructions. All additional languages and words should be added into this file.
+
+    - leaflet-routing-machine.js - (LRM) routing plugin where the main route building logic is realised.
+The main documentation for LRM is on that link: http://www.liedman.net/leaflet-routing-machine/api/#l-routing-itinerary
+The GitHub link where the original file with css can be downloaded: https://github.com/perliedman/leaflet-routing-machine
+In the following discription I will describe the main changes I have made in LRM.
+
+1. The main changes were made in three classes: L.Routing.OSRM; L.Routing.Itinerary; L.Routing.ItineraryBuilder
+
+2. L.Routing.OSRM - handles communication with the OSRM backend, building the request and parsing the response.
+Functions buildRouteUrl for sending request and _routeDone for parsing the response were modyfied.
+
+3. L.Routing.Itinerary - a widget to display itineraries as text in a control.
+Functions: setAlternatives, _createAlternative, _createItineraryContainer were rewritten;
+Functions: _addToolTip, _addHeaderLegListeners, _openInstructions, _backToAlts were added to the class.
+
+4. L.Routing.ItineraryBuilder - creates the DOM structure for an itinerary.
+This class were completely reimplemented. All functions inside used for creating a DOM structure for accordion.
+Each itinerary leg has special title, the body inside the leg are routing steps.
+
+Other useful links:
+- Open trip planner (OTP) docs: http://docs.opentripplanner.org/en/latest/
+- leaflet API: http://leafletjs.com/reference.html
+- leaflet.Control.Geocoder: https://github.com/perliedman/leaflet-control-geocoder
