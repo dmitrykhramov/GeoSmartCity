@@ -68,7 +68,15 @@ var lang = {
         'emission': 'CO2 päästö (g/km)',
         'NOW': 'Nyt',
         'DEPARTURE': 'Lähtö',
-        'ARRIVAL': 'Saapuminen'
+        'ARRIVAL': 'Saapuminen',
+        'WALK': 'Kävellä',
+        'BIKE': 'Polkupyörä',
+        'CAR': 'Auto',
+        'BUS': 'Bussi',
+        'ParkRide': 'Liityntäpysäköinti',
+        'SETTINGS': 'Asetukset',
+        'CO2': 'CO2 päästö (g/km): ',
+        'OFFSET': 'Offset (puut/päivä): '
     },
 
     en: {
@@ -93,7 +101,15 @@ var lang = {
         'emission': 'CO2 emission (g/km)',
         'NOW': 'Now',
         'DEPARTURE': 'Departure',
-        'ARRIVAL': 'Arrival'
+        'ARRIVAL': 'Arrival',
+        'WALK': 'Walk',
+        'BIKE': 'Bicycle',
+        'CAR': 'Car',
+        'BUS': 'Bus',
+        'ParkRide': 'Park&Ride',
+        'SETTINGS': 'Settings',
+        'CO2': 'CO2 emission (g/km): ',
+        'OFFSET': 'Offset (trees/day): '
 
     },
 
@@ -119,7 +135,15 @@ var lang = {
         'emission': 'CO2 utsläpp (g/km)',
         'NOW': 'Nu',
         'DEPARTURE': 'Avresa',
-        'ARRIVAL': 'Ankomst'
+        'ARRIVAL': 'Ankomst',
+        'WALK': 'Gå',
+        'BIKE': 'Cykel',
+        'CAR': 'Bil',
+        'BUS': 'Buss',
+        'ParkRide': 'Park&Rida',
+        'SETTINGS': 'Inställningar',
+        'CO2': 'CO2 utsläpp (g/km): ',
+        'OFFSET': 'Offset (träd/dag): '
     }
 };
 
@@ -128,8 +152,9 @@ var lang = {
  * Anonymous function which is used for changing languages for UI
  * depending on the selected "lang" object.
  */
+var lng = '';
 $(function() {
-    var lng = '';
+
     var pageUrl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
     if (pageUrl === "?lang=en")
         lng = 'en';
@@ -160,5 +185,66 @@ $(function() {
     $('label[for="nowID"]').html(lang[lng]['NOW']);
     $('label[for="depID"]').html(lang[lng]['DEPARTURE']);
     $('label[for="arrID"]').html(lang[lng]['ARRIVAL']);
+    $('#tipWalk').html(lang[lng]['WALK']);
+    $('#tipBike').html(lang[lng]['BIKE']);
+    $('#tipCar').html(lang[lng]['CAR']);
+    $('#tipBus').html(lang[lng]['BUS']);
+    $('#tipPR').html(lang[lng]['ParkRide']);
+    $('#tipSettings').html(lang[lng]['SETTINGS']);
+    $('#co2Calc').html(lang[lng]['CO2']);
+    $('#offsetCalc').html(lang[lng]['OFFSET']);
 
 });
+
+/**
+ * Checks if instructions contains unnamed street names
+ * If so, it replaces english version with finish or swedish
+ * @param road
+ * @returns {String} language alternative of road name
+ */
+function checkUnnamedStreets (road) {
+    switch (lng) {
+        case 'fi':
+            switch (road) {
+                case 'service road':
+                   return 'nimeämätön tie';
+                case 'path':
+                    return 'polku';
+                case 'bike path':
+                    return 'pyörätietä';
+                case 'ramp':
+                    return 'ramppi';
+                case 'road':
+                    return 'tie';
+                case 'parking aisle':
+                    return 'pysäköinti käytävä';
+                case 'track':
+                    return 'seurata';
+                case 'steps':
+                    return 'askeleet';
+                default:
+                    return road;
+            }
+        case 'sv':
+            switch (road) {
+                case 'service road':
+                    return 'tjänsten väg';
+                case 'path':
+                    return 'väg';
+                case 'bike path':
+                    return 'cykelväg';
+                case 'ramp':
+                    return 'ramp';
+                case 'road':
+                    return 'väg';
+                case 'parking aisle':
+                    return 'parkeringsgången';
+                case 'track':
+                    return 'spåra';
+                case 'steps':
+                    return 'steg';
+                default:
+                    return road;
+            }
+    }
+}

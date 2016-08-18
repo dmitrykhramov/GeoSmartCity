@@ -62,13 +62,18 @@
 
 <!--Appeares when mode options on hover -->
     <div id="tipMode" class="toolTip">
-        <p></p>
+        <p id="tipWalk" style="display: none"></p>
+        <p id="tipBike" style="display: none"></p>
+        <p id="tipCar" style="display: none"></p>
+        <p id="tipBus" style="display: none"></p>
+        <p id="tipPR" style="display: none"></p>
+        <p id="tipSettings" style="display: none"></p>
     </div>
 
 <!--Appeares when trees image on hover-->
     <div id="tipCO2" class="toolTip">
-        <p></p>
-        <p></p>
+        <p id="co2Calc" style="display: none"></p>
+        <p id="offsetCalc" style="display: none"></p>
     </div>
 
 <!--div for displaying date and time settings-->
@@ -172,6 +177,20 @@
     <!--            <input type=number value="" class="text-field" id="passengerInput">-->
     <!--        </div>-->
     <!--    </div>-->
+    </div>
+
+<!--Additional buttons added for mobile screen-->
+    <button class="langButton">
+        <div id="langArrow" class="arrow-up"></div>
+    </button>
+
+    <div id="mobileButtons">
+        <button type="button" class="changeRoute">
+            Change route
+        </button>
+        <button type="button"" class="hideAlternative">
+            <div id="altArrow" class="arrow-up"></div>
+        </button>
     </div>
 
 </body>

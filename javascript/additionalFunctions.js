@@ -5,16 +5,15 @@
 // Default routing mode
 var selectedMode = 'WALK';
 
+var screenWidth = $(window).width();
+
 $(document).ready(function () {
-    console.log($(window).height());
-    console.log($(document).height());
-    console.log($(document).width());
-    console.log($(document).width());
     // Setting up datePicker plugin
     $("#dateId").datepicker({
         changeMonth: true,
         changeYear: true
     });
+
     // Setting up timrPicker plugin
     $('#timeId').timepicker({
         timeFormat: 'HH:mm',
@@ -65,7 +64,7 @@ $(document).ready(function () {
     // displaying tips above the mode icons on hover
     $("#walk").hover(function () {
         var offset = $("#walk").offset();
-        $("#tipMode").find("p").text("Walk");
+        $("#tipWalk").show();
         $("#tipMode").css({
             top: offset.top -30,
             left: offset.left +20,
@@ -74,6 +73,7 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipWalk").hide();
 
     });
 
@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     $("#bicycle").hover(function () {
         var offset = $("#bicycle").offset();
-        $("#tipMode").find("p").text("Bicycle");
+        $("#tipBike").show();
         $("#tipMode").css({
             top: offset.top -30,
             left: offset.left +20,
@@ -101,6 +101,7 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipBike").hide()
 
     });
 
@@ -119,7 +120,7 @@ $(document).ready(function () {
 
     $("#car").hover(function () {
         var offset = $("#car").offset();
-        $("#tipMode").find("p").text("Car");
+        $("#tipCar").show();
         $("#tipMode").css({
             top: offset.top -20,
             left: offset.left +17,
@@ -128,6 +129,7 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipCar").hide();
 
     });
 
@@ -146,7 +148,7 @@ $(document).ready(function () {
 
     $("#bus").hover(function () {
         var offset = $("#bus").offset();
-        $("#tipMode").find("p").text("Bus");
+        $("#tipBus").show();
         $("#tipMode").css({
             top: offset.top -35,
             left: offset.left +20,
@@ -155,6 +157,7 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipBus").hide();
 
     });
 
@@ -173,7 +176,7 @@ $(document).ready(function () {
 
     $("#park-and-ride").hover(function () {
         var offset = $("#park-and-ride").offset();
-        $("#tipMode").find("p").text("Car&Bus");
+        $("#tipPR").show();
         $("#tipMode").css({
             top: offset.top -35,
             left: offset.left +20,
@@ -182,6 +185,7 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipPR").hide();
 
     });
 
@@ -234,7 +238,7 @@ $(document).ready(function () {
 
     $("#settings").hover(function () {
         var offset = $("#settings").offset();
-        $("#tipMode").find("p").text("Settings");
+        $("#tipSettings").show();
         $("#tipMode").css({
             top: offset.top -30,
             left: offset.left +20,
@@ -243,8 +247,43 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 1.0}, 200);
     }, function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
+        $("#tipSettings").hide();
 
     });
+
+    // Showing/hiding languge buttons for mobile screen
+    $(".langButton").click(function () {
+        if ($("#myNavbar").is(":hidden")) {
+            $("#myNavbar").show("fast");
+            $("#langArrow").addClass("arrow-down").removeClass("arrow-up");
+        }
+        else {
+            $("#myNavbar").hide("fast");
+            $("#langArrow").addClass("arrow-up").removeClass("arrow-down");
+        }
+    });
+
+    // Showing/hiding alternatives for mobile screen
+    $(".hideAlternative").click(function () {
+        if ($(".single-alternative").is(":visible")) {
+            $(".single-alternative").hide("fast");
+            $("#altArrow").addClass("arrow-down").removeClass("arrow-up");
+        }
+        else {
+            $(".single-alternative").show("fast");
+            if ($(".panel-group").is(":visible")) {
+                $(".single-alternative.leaflet-routing-alt-minimized").hide();
+            }
+            $("#altArrow").addClass("arrow-up").removeClass("arrow-down");
+        }
+    });
+
+    // Back to cgange the route (mobile screen)
+    $(".changeRoute").click(function () {
+        $(".single-alternative, #mobileButtons").hide("fast");
+        $(".logo, .leaflet-routing-geocoders").show("fast");
+    });
+
 });
 
 

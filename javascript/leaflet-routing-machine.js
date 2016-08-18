@@ -645,7 +645,6 @@ if (typeof module !== undefined) module.exports = polyline;
 		},
 
 		route: function(options) {
-			// console.log(options);
 			var ts = ++this._requestCount,
 				wps;
 
@@ -748,7 +747,7 @@ if (typeof module !== undefined) module.exports = polyline;
 				message;
 
 			this._element = L.DomUtil.create('div', 'leaflet-bar leaflet-routing-error');
-			this._element.style.visibility = 'visible';
+			this._element.style.visibility = 'hidden';
 
 			header = L.DomUtil.create('h3', null, this._element);
 			message = L.DomUtil.create('span', null, this._element);
@@ -891,7 +890,7 @@ if (typeof module !== undefined) module.exports = polyline;
 				return 'turn-right';
 			case 'HARD_RIGHT':
 				return 'sharp-right';
-			case 'TurnAround':
+			case 'UTURN_LEFT':
 				return 'u-turn';
 			case 'HARD_LEFT':
 				return 'sharp-left';
@@ -901,7 +900,7 @@ if (typeof module !== undefined) module.exports = polyline;
 				return 'bear-left';
 			case 'WaypointReached':
 				return 'via';
-			case 'Roundabout':
+			case 'CIRCLE_COUNTERCLOCKWISE':
 				return 'enter-roundabout';
 			case 'END':
 				return 'none';
@@ -913,7 +912,9 @@ if (typeof module !== undefined) module.exports = polyline;
 		_getInstructionTemplate: function(instr, i) {
 			var type = instr.type === 'Straight' ? (i === 0 ? 'Head' : 'Continue') : instr.type,
 				strings = L.Routing.Localization[this.options.language].instructions[type];
-
+			if (lng === 'fi' || lng === 'sv') {
+				instr.road = checkUnnamedStreets(instr.road);
+			}
 			return strings[0] + (strings.length > 1 && instr.road ? strings[1] : '');
 		}
 	});
@@ -1193,6 +1194,11 @@ if (typeof module !== undefined) module.exports = polyline;
 			$('.walkSpeed, .bikeSpeed, .walkDistance, .carbonDioxide').hide('fast');
 			$("#settings").addClass("settingsIcon").removeClass("settingsIconClicked");
 
+			if (screenWidth < 640){
+				$(".logo, .leaflet-routing-geocoders, .now-later").hide();
+				$("#mobileButtons").show();
+			}
+
 			return this;
 		},
 
@@ -1305,6 +1311,10 @@ if (typeof module !== undefined) module.exports = polyline;
 					else {
 						// This variable contains the name of the road
 						text = instr.road;
+						// Checking for unnamed streets
+						if (lng === 'fi' || lng === 'sv') {
+							text = checkUnnamedStreets(text);
+						}
 						// Instruction type INIT means the start of the next leg
 						// Each leg has special heading (panel-title) depending on the mode
 						if (instr.type === 'INIT') {
@@ -1362,6 +1372,8 @@ if (typeof module !== undefined) module.exports = polyline;
 							icon = this._formatter.getIconName(instr, i);
 							step = this._itineraryBuilder.createStep(text, distance, icon, panelBody);
 							this._addRowListeners(step, instr.index);
+							if (instr.type === 'END')
+								$(step).addClass('lastStepMargin');
 						}
 					}
 				}
@@ -1387,8 +1399,11 @@ if (typeof module !== undefined) module.exports = polyline;
 		_addToolTip: function(icon, carbonEmission) {
 			L.DomEvent.addListener(icon, 'mouseover', function() {
 				var offset = $(icon).offset();
-				$("#tipCO2 p").first().text("CO2 emission: " + carbonEmission + " (g/km)");
-				$("#tipCO2 p").last().text("Offset: " + Math.round(carbonEmission / 60) + " (trees/day)");
+				$("#co2Calc").append("<span>" + carbonEmission + "</span>");
+				$("#offsetCalc").append("<span>" + Math.round(carbonEmission / 60) + "</span>");
+				$("#co2Calc").show();
+				$("#offsetCalc").show();
+				// $("#tipCO2 p").last().text("Offset: " + Math.round(carbonEmission / 60) + " (trees/day)");
 				$("#tipCO2").css({
 					top: offset.top +10,
 					left: offset.left +100,
@@ -1398,6 +1413,7 @@ if (typeof module !== undefined) module.exports = polyline;
 			}, this);
 			L.DomEvent.addListener(icon, 'mouseout', function() {
 				$(".toolTip").animate({opacity: 0.0}, 200).css({display: "none"});
+				$("#tipCO2 span").remove();
 			}, this);
 
 		},
@@ -1454,7 +1470,7 @@ if (typeof module !== undefined) module.exports = polyline;
          */
 		_openInstructions: function (header) {
 			L.DomEvent.addListener(header, 'dblclick', function() {
-				$(".single-alternative.leaflet-routing-alt-minimized").hide();
+				$(".single-alternative.leaflet-routing-alt-minimized, .now-later").hide();
 				$(".single-alternative .panel-group").show("slow");
 			}, this);
 
@@ -1684,15 +1700,19 @@ if (typeof module !== undefined) module.exports = polyline;
 				if (route.instructions[j][0] != undefined){
 					if (route.instructions[j][0]["mode"] == "WALK"){
 						this.options.styles[2]["color"] = "green";
+						this.options.styles[2]["weight"] = 5;
 					}
 					else if (route.instructions[j][0]["mode"] == "CAR"){
-						this.options.styles[2]["color"] = "brown";
+						this.options.styles[2]["color"] = "blue";
+						this.options.styles[2]["weight"] = 5;
 					}
 					else if (route.instructions[j][0]["mode"] == "BICYCLE"){
-						this.options.styles[2]["color"] = "blue";
+						this.options.styles[2]["color"] = "yellow";
+						this.options.styles[2]["weight"] = 5;
 					}
 					else if (route.instructions[j][0]["mode"] == "BUS"){
 						this.options.styles[2]["color"] = "black";
+						this.options.styles[2]["weight"] = 5;
 					}
 					else {
 						this.options.styles[2]["color"] = "yellow";
@@ -1706,9 +1726,7 @@ if (typeof module !== undefined) module.exports = polyline;
 					route.coordinates[j],
 					this.options.styles,
 					this.options.addWaypoints);
-				
 			}
-			
 		},
 
 		addTo: function(map) {
@@ -2600,13 +2618,15 @@ if (typeof module !== undefined) module.exports = polyline;
 							if (selectedMode == "BUSISH%2CWALK") {
 								d = $("#dateId").val();
 								dateString = d.split("/");
-								dateString = dateString[1] + "-" + dateString[0] + "-" + dateString[2];
+								dateString = dateString[0] + "-" + dateString[1] + "-" + dateString[2];
 								timeString = $("#timeId").val();
 							}
 			} else {
 				d = $("#dateId").val();
 				dateString = d.split("/");
-				dateString = dateString[1] + "-" + dateString[0] + "-" + dateString[2];
+				console.log(dateString);
+				dateString = dateString[0] + "-" + dateString[1] + "-" + dateString[2];
+				console.log(dateString);
 				timeString = $("#timeId").val();
 			}
 
@@ -2645,7 +2665,6 @@ if (typeof module !== undefined) module.exports = polyline;
 		},
 
 		_convertInstructions: function(osrmInstructions) {
-			console.log(osrmInstructions);
 			var result = [],
 			    i,
 			    instr,
@@ -2668,7 +2687,6 @@ if (typeof module !== undefined) module.exports = polyline;
 					});
 				}
 			}
-//			console.log(result);
 			return result;
 		},
 
