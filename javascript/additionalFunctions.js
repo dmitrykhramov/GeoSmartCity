@@ -36,7 +36,7 @@ $(document).ready(function () {
         $(".walkDistance, .walkSpeed, .bikeSpeed, .carbonDioxide").hide('fast');
         $(".now-later").insertAfter(".leaflet-routing-geocoders").show('slow');
         // Setting current date
-        $("#dateId").datepicker('setDate', "11/11/2015");
+        $("#dateId").datepicker('setDate', new Date());
 
 
     });

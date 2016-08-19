@@ -2615,18 +2615,10 @@ if (typeof module !== undefined) module.exports = polyline;
 				t = new Date();
 				dateString = (d.getMonth()+1) + "-" + d.getDate() + "-" + d.getFullYear();
 				timeString = t.toLocaleTimeString().replace(/([\t]+:[\t]{2})(:[\t]{2})(.*)/, "$1$3");
-							if (selectedMode == "BUSISH%2CWALK") {
-								d = $("#dateId").val();
-								dateString = d.split("/");
-								dateString = dateString[0] + "-" + dateString[1] + "-" + dateString[2];
-								timeString = $("#timeId").val();
-							}
 			} else {
 				d = $("#dateId").val();
 				dateString = d.split("/");
-				console.log(dateString);
 				dateString = dateString[0] + "-" + dateString[1] + "-" + dateString[2];
-				console.log(dateString);
 				timeString = $("#timeId").val();
 			}
 
