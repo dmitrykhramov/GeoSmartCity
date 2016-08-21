@@ -76,7 +76,9 @@ var lang = {
         'ParkRide': 'Liityntäpysäköinti',
         'SETTINGS': 'Asetukset',
         'CO2': 'CO2 päästö (g/km): ',
-        'OFFSET': 'Offset (puut/päivä): '
+        'OFFSET': 'Offset (puut/päivä): ',
+        'APPLY': 'Ok',
+        'CHANGE': 'Muuta reittiä'
     },
 
     en: {
@@ -109,7 +111,9 @@ var lang = {
         'ParkRide': 'Park&Ride',
         'SETTINGS': 'Settings',
         'CO2': 'CO2 emission (g/km): ',
-        'OFFSET': 'Offset (trees/day): '
+        'OFFSET': 'Offset (trees/day): ',
+        'APPLY': 'Apply',
+        'CHANGE': 'Change route'
 
     },
 
@@ -143,7 +147,9 @@ var lang = {
         'ParkRide': 'Park&Rida',
         'SETTINGS': 'Inställningar',
         'CO2': 'CO2 utsläpp (g/km): ',
-        'OFFSET': 'Offset (träd/dag): '
+        'OFFSET': 'Offset (träd/dag): ',
+        'APPLY': 'Ok',
+        'CHANGE': 'Ändra rutt'
     }
 };
 
@@ -193,6 +199,8 @@ $(function() {
     $('#tipSettings').html(lang[lng]['SETTINGS']);
     $('#co2Calc').html(lang[lng]['CO2']);
     $('#offsetCalc').html(lang[lng]['OFFSET']);
+    $('.applyBtn').html(lang[lng]['APPLY']);
+    $('.changeRoute').html(lang[lng]['CHANGE']);
 
 });
 
@@ -203,6 +211,15 @@ $(function() {
  * @returns {String} language alternative of road name
  */
 function checkUnnamedStreets (road) {
+    if (road.indexOf('corner of service road and') !== -1){
+        // var toTranslate = road.split(" ").slice(0,5).join(" ");
+        var roadPart = road.split(" ").slice(5);
+        if (lng === 'fi')
+            return 'kulmassa palvelun tie- ja ' + roadPart;
+        else if (lng === 'sv')
+            return 'hörnet av tjänsten väg och ' + roadPart;
+    }
+
     switch (lng) {
         case 'fi':
             switch (road) {
@@ -222,6 +239,10 @@ function checkUnnamedStreets (road) {
                     return 'seurata';
                 case 'steps':
                     return 'askeleet';
+                case 'alley':
+                    return 'kuja';
+                case 'corner of path and steps':
+                    return 'kulmassa polku ja vaiheet';
                 default:
                     return road;
             }
@@ -243,6 +264,10 @@ function checkUnnamedStreets (road) {
                     return 'spåra';
                 case 'steps':
                     return 'steg';
+                case 'alley':
+                    return 'gränd';
+                case 'corner of path and steps':
+                    return 'hörnet av vägen och steg';
                 default:
                     return road;
             }

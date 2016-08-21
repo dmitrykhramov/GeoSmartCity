@@ -1191,11 +1191,11 @@ if (typeof module !== undefined) module.exports = polyline;
 			this._selectRoute({route: this._routes[0], alternatives: this._routes.slice(1)});
 
 			// Hiding all settings menus if the route is calculated
-			$('.walkSpeed, .bikeSpeed, .walkDistance, .carbonDioxide').hide('fast');
+			$('.walkSpeed, .bikeSpeed, .walkDistance, .carbonDioxide, .applyDiv').hide('fast');
 			$("#settings").addClass("settingsIcon").removeClass("settingsIconClicked");
 
-			if (screenWidth < 640){
-				$(".logo, .leaflet-routing-geocoders, .now-later").hide();
+			if ($('#mobile-indicator').is(':visible')){
+				$(".logo, .leaflet-routing-geocoders, .now-later, .applyDiv").hide();
 				$("#mobileButtons").show();
 			}
 
@@ -1274,7 +1274,7 @@ if (typeof module !== undefined) module.exports = polyline;
 			    legPanel, panelTitle, panelBody,
 				k = 1,
 			    i, j,
-			    instr, step, distance, text, icon,
+			    instr, step, distance, text, icon, panelImg,
 				stopID, stopName, time, busNumber,
 				busFlag = false,
 				arrowBack;
@@ -1332,7 +1332,7 @@ if (typeof module !== undefined) module.exports = polyline;
 							// P&R mode has special icon park entering instead of the
 							// normal text(road name which is P+R in this mode)
 							else if (text == "P+R") {
-								text = '<img class="busEnter" src="css/images/P-entrance.png">';
+								text = '<img class="ParkPlace" src="css/images/ParkPlace.png">';
 								panelTitle = this._itineraryBuilder.createPanelTitleParkRide(text, k);
 							}
 							// If new leg is other mode than bus there are two oprions
@@ -1350,7 +1350,18 @@ if (typeof module !== undefined) module.exports = polyline;
 								// Ir new leg doesn't go after bus, it has
 								// normal title with the name of the road
 								else {
-									panelTitle = this._itineraryBuilder.createPanelTitle(text, k);
+									switch (instr.mode) {
+										case 'WALK':
+											panelImg = '<img class="panelImg" src="css/images/Walk-gray.png">';
+											break;
+										case 'CAR':
+											panelImg = '<img class="panelImg" src="css/images/Car-gray.png">';
+											break;
+										case 'BICYCLE':
+											panelImg = '<img class="panelImg" src="css/images/Biking-gray.png">';
+											break;
+									}
+									panelTitle = this._itineraryBuilder.createPanelTitle(text, k, panelImg);
 								}
 							}
 							// Creating other html structure for the instructions container
@@ -1586,7 +1597,7 @@ if (typeof module !== undefined) module.exports = polyline;
 		createLeg: function(panelTitle, panelBody, k) {
 			var legPanel = L.DomUtil.create('div', 'panel panel-default'),
 				panelHeading = L.DomUtil.create('div', 'panel-heading', legPanel),
-				stepsDiv = L.DomUtil.create('div', 'panel-collapse collapse', legPanel);
+				stepsDiv = L.DomUtil.create('div', 'panel-collapse collapse in', legPanel);
 			stepsDiv.setAttribute('id', 'collapse' + k);
 			stepsDiv.appendChild(panelBody);
 			panelHeading.appendChild(panelTitle);
@@ -1594,13 +1605,14 @@ if (typeof module !== undefined) module.exports = polyline;
 		},
 
 		// Title for leg
-		createPanelTitle: function (text, k) {
+		createPanelTitle: function (text, k, panelImg) {
 			var panelTitle = L.DomUtil.create('h4', 'panel-title'),
 				header = L.DomUtil.create('a', '', panelTitle);
 			header.setAttribute('data-toggle', 'collapse');
 			header.setAttribute('data-parent', '#accordion');
 			header.setAttribute('href', '#collapse' + k);
-			header.appendChild(document.createTextNode(text));
+			header.innerHTML = panelImg;
+			header.appendChild(document.createTextNode(" " + text));
 			return panelTitle;
 		},
 
@@ -1949,7 +1961,7 @@ if (typeof module !== undefined) module.exports = polyline;
 			ui: {
 				startPlaceholder: 'Alku',
 				viaPlaceholder: 'Via {viaNumber}',
-				endPlaceholder: 'Pää'
+				endPlaceholder: 'Loppu'
 			}
 		},
 
@@ -2320,8 +2332,8 @@ if (typeof module !== undefined) module.exports = polyline;
 
 	L.Routing.OSRM = L.Class.extend({
 		options: {
-			serviceUrl: 'http://hub.geosmartcity.eu/otp/routers/default/plan',
-			// serviceUrl: 'http://gis.dc.turkuamk.fi:8080/otp/routers/default/plan',
+			// serviceUrl: 'http://hub.geosmartcity.eu/otp/routers/default/plan',
+			serviceUrl: 'http://gis.dc.turkuamk.fi:8080/otp/routers/default/plan',
 			timeout: 30 * 1000,
 			routingOptions: {}
 		},
@@ -2405,7 +2417,7 @@ if (typeof module !== undefined) module.exports = polyline;
          */
 		_routeDone: function(response, inputWaypoints, callback, context) {
 			// Can be useful if you want to see which data was returned from the server
-			// console.log(response);
+			console.log(response);
 			var coordinates,
 			    alts,
 			    actualWaypoints,

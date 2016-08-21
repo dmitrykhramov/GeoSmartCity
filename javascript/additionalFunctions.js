@@ -18,7 +18,21 @@ $(document).ready(function () {
     $('#timeId').timepicker({
         timeFormat: 'HH:mm',
         defaultTime: 'now',
-        dynamic: true
+        dynamic: true,
+        change: function (time) {
+            var $this = $(this),
+                val   = $this.val(),
+                prev  = $this.data("prevValue");
+            if (val !== prev) {
+                try {
+                    route.route();
+                }
+                catch (e) {
+                    // do nothing
+                }
+                $this.data("prevValue", val);
+            }
+        }
     });
 
     // If NOW mode selected, changing date/time disabled
@@ -35,15 +49,33 @@ $(document).ready(function () {
     $('#bus, #park-and-ride').click(function() {
         $(".walkDistance, .walkSpeed, .bikeSpeed, .carbonDioxide").hide('fast');
         $(".now-later").insertAfter(".leaflet-routing-geocoders").show('slow');
+        $(".applyDiv").insertAfter(".now-later").show('slow');
         // Setting current date
-        $("#dateId").datepicker('setDate', new Date());
-
+        if ($(".time-options").find("input[value='Now']").prop("checked")) {
+            $("#dateId").datepicker('setDate', new Date());
+        }
 
     });
 
+    $('#dateId').change(function(){
+        var $this = $(this),
+            val   = $this.val(),
+            prev  = $this.data("prevValue");
+        if (val !== prev) {
+            try {
+                route.route();
+            }
+            catch (e) {
+
+            }
+            $this.data("prevValue", val);
+        }
+    });
+
+
     // Time settings disappear if other modes selected
     $("#walk, #bicycle, #car" ).click(function(){
-        $(".now-later, .walkDistance, .walkSpeed, .bikeSpeed, .carbonDioxide").hide('fast');
+        $(".now-later, .walkDistance, .walkSpeed, .bikeSpeed, .carbonDioxide, .applyDiv").hide('fast');
     });
 
     //***************WALK MODE***************
@@ -201,37 +233,47 @@ $(document).ready(function () {
         //Displaying/hiding the settings for the current routing mode
         switch (selectedMode) {
             case 'CAR':
-                if ($(".carbonDioxide").is(':hidden'))
+                if ($(".carbonDioxide").is(':hidden')) {
                     $(".carbonDioxide").insertAfter(".leaflet-routing-geocoders").show('slow');
+                    $(".applyDiv").insertAfter(".carbonDioxide").show('slow');
+                }
                 else
-                    $(".carbonDioxide").hide('fast');
+                    $(".carbonDioxide, .applyDiv").hide('fast');
                 break;
 
             case 'WALK':
-                if ($(".walkSpeed").is(':hidden'))
+                if ($(".walkSpeed").is(':hidden')) {
                     $(".walkSpeed").insertAfter(".leaflet-routing-geocoders").show('slow');
+                    $(".applyDiv").insertAfter(".walkSpeed").show('slow');
+                }
                 else
-                    $(".walkSpeed").hide('fast');
+                    $(".walkSpeed, .applyDiv").hide('fast');
                 break;
 
             case 'BICYCLE':
-                if ($(".bikeSpeed").is(':hidden'))
+                if ($(".bikeSpeed").is(':hidden')) {
                     $(".bikeSpeed").insertAfter(".leaflet-routing-geocoders").show('slow');
+                    $(".applyDiv").insertAfter(".bikeSpeed").show('slow');
+                }
                 else
-                    $(".bikeSpeed").hide('fast');
+                    $(".bikeSpeed, .applyDiv").hide('fast');
                 break;
 
             case 'BUSISH%2CWALK':
-                if ($(".now-later, .walkSpeed, .walkDistance").is(':hidden'))
+                if ($(".now-later, .walkSpeed, .walkDistance").is(':hidden')) {
                     $(".now-later, .walkSpeed, .walkDistance").insertAfter(".leaflet-routing-geocoders").show('slow');
+                    $(".applyDiv").insertAfter(".walkDistance").show('slow');
+                }
                 else
-                    $(".now-later, .walkSpeed, .walkDistance").hide('fast');
+                    $(".now-later, .walkSpeed, .walkDistance, .applyDiv").hide('fast');
                 break;
             case 'CAR_PARK%2CWALK%2CTRANSIT':
-                if ($(".now-later, .carbonDioxide").is(':hidden'))
+                if ($(".now-later, .carbonDioxide").is(':hidden')) {
                     $(".now-later, .carbonDioxide").insertAfter(".leaflet-routing-geocoders").show('slow');
+                    $(".applyDiv").insertAfter(".carbonDioxide").show('slow');
+                }
                 else
-                    $(".now-later, .carbonDioxide").hide('fast');
+                    $(".now-later, .carbonDioxide, .applyDiv").hide('fast');
                 break;
         }
     });
@@ -249,6 +291,11 @@ $(document).ready(function () {
         $("#tipMode").animate({opacity: 0.0}, 200).css({display: "none"});
         $("#tipSettings").hide();
 
+    });
+
+    // Builds route after changing settings
+    $(".applyBtn").click(function () {
+       route.route();
     });
 
     // Showing/hiding languge buttons for mobile screen
@@ -282,6 +329,9 @@ $(document).ready(function () {
     $(".changeRoute").click(function () {
         $(".single-alternative, #mobileButtons").hide("fast");
         $(".logo, .leaflet-routing-geocoders").show("fast");
+        if(selectedMode == 'BUSISH%2CWALK' || selectedMode == 'CAR_PARK%2CWALK%2CTRANSIT') {
+            $(".now-later, .applyDiv").show("fast");
+        }
     });
 
 });

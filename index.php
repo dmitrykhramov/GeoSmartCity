@@ -168,15 +168,11 @@
                 </select>
             </div>
         </div>
+    </div>
 
-    <!--    <div class="row">-->
-    <!--        <div class="col-md-6">-->
-    <!--            <label id="passenger"></label>-->
-    <!--        </div>-->
-    <!--        <div class="col-md-6">-->
-    <!--            <input type=number value="" class="text-field" id="passengerInput">-->
-    <!--        </div>-->
-    <!--    </div>-->
+    <div class="applyDiv">
+        <button type="button" class="applyBtn">
+        </button>
     </div>
 
 <!--Additional buttons added for mobile screen-->
@@ -186,13 +182,13 @@
 
     <div id="mobileButtons">
         <button type="button" class="changeRoute">
-            Change route
         </button>
         <button type="button"" class="hideAlternative">
             <div id="altArrow" class="arrow-up"></div>
         </button>
     </div>
 
+    <div id="mobile-indicator"></div>
 </body>
 
 </html>
