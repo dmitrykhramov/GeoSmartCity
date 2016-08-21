@@ -982,7 +982,7 @@ if (typeof module !== undefined) module.exports = polyline;
 			},
 			maxGeocoderTolerance: 200,
 			autocompleteOptions: {},
-			language: setRoutingLanguage(),
+			language: setRoutingLanguage()
 		},
 
 		initialize: function(wp, i, nWps, options) {
@@ -1719,7 +1719,7 @@ if (typeof module !== undefined) module.exports = polyline;
 						this.options.styles[2]["weight"] = 5;
 					}
 					else if (route.instructions[j][0]["mode"] == "BICYCLE"){
-						this.options.styles[2]["color"] = "yellow";
+						this.options.styles[2]["color"] = "#3A68A1";
 						this.options.styles[2]["weight"] = 5;
 					}
 					else if (route.instructions[j][0]["mode"] == "BUS"){
